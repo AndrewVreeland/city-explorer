@@ -1,3 +1,51 @@
+
+
+# City Explorer
+
+**Author**: Andrew Vreeland
+**Version**: 1.0.0 (increment the patch/fix version number if you make more commits past your first submission)
+
+## Overview
+
+This will give you the ability to look up cities and their locations around the world! 
+
+## Getting Started
+
+create a react app
+tie in bootstrap, Axios and locationIQ
+handle state data that is coming from axios so that it will be rendered on the page properly from user input
+import a form for users to be able to type in their cities
+handle 404 errors if users were to input bad data.
+
+## Architecture
+
+React, JS, Bootstrap, Axios, LocationIQ, Netlify
+
+## Change Log
+<!-- Use this area to document the iterative changes made to your application as each feature is successfully implemented. Use time stamps. Here's an example:
+
+01-01-2001 4:59pm - Application now has a fully-functional express server, with a GET route for the location resource. -->
+
+## Credit and Collaborations
+<!-- Give credit (and a link) to other people or resources that helped you build this application. -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
