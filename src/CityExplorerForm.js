@@ -10,11 +10,13 @@ class CityExplorerForm extends React.Component{
     <Form onSubmit={this.props.getCityData} >
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>City Finder</Form.Label>
+        <Form.Group id='enterCityContainer'>
         <Form.Control id='textInput' type="text" onChange={this.props.handleCityInput} placeholder="Enter City" />
-      </Form.Group>
-      <Button variant="primary" type="submit">
+      <Button id='cityExplorerButton' variant="success" type="submit">
         Explore!
       </Button>
+      </Form.Group>
+      </Form.Group>
     </Form>
     </div>
     

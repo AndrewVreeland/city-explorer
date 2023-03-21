@@ -37,8 +37,6 @@ img{
 }
 
 #textInput{
-  margin-left: auto !important;
-  margin-right: auto !important;
   width: 25%;
 }
 
@@ -46,13 +44,10 @@ img{
   display: flex;
   justify-content: center;
 }
-button{
-  margin-left: 1220px !important;
-  margin-top: -95px !important;
+#enterCityContainer{
+  display: flex;
+  justify-content: center;
 }
-lat{
-  padding-left: 10px !important;
-}
-lon{
-
+#cityExplorerButton{
+  margin-left: 10px;
 }
