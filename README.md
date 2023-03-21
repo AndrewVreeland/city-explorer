@@ -22,9 +22,9 @@ handle 404 errors if users were to input bad data.
 React, JS, Bootstrap, Axios, LocationIQ, Netlify
 
 ## Change Log
-<!-- Use this area to document the iterative changes made to your application as each feature is successfully implemented. Use time stamps. Here's an example:
-
-01-01-2001 4:59pm - Application now has a fully-functional express server, with a GET route for the location resource. -->
+Map is rendering
+error codes render when erros occur
+latitude and longitutde populate with map location
 
 ## Credit and Collaborations
 <!-- Give credit (and a link) to other people or resources that helped you build this application. -->
