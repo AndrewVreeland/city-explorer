@@ -5,16 +5,18 @@ class CityExplorerForm extends React.Component{
 
   render() {
     return(
-      
+      <div>
+        <h1>Are You Ready For An Adventure?</h1>
     <Form onSubmit={this.props.getCityData} >
       <Form.Group className="mb-3" controlId="formBasicEmail">
         <Form.Label>City Finder</Form.Label>
-        <Form.Control type="text" onChange={this.props.handleCityInput} placeholder="Enter City" />
+        <Form.Control id='textInput' type="text" onChange={this.props.handleCityInput} placeholder="Enter City" />
       </Form.Group>
       <Button variant="primary" type="submit">
         Explore!
       </Button>
     </Form>
+    </div>
     
     )
   }
