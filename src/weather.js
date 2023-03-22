@@ -4,6 +4,7 @@ class WeatherData extends React.Component{
   render(){
     return(
       <section>
+<p>{this.props.cityWeatherData}</p>
 
       </section>
     )
