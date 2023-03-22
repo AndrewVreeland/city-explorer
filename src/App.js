@@ -36,8 +36,6 @@ handleGetWeather = async() => {
       cityData: cityDataFromAxio.data[0],
       error: false
     })
-
-    this.handleGetWeather();
   } catch (error) {
     console.log(error.message)
     this.setState({
@@ -63,7 +61,7 @@ handleGetWeather = async() => {
         cityWeatherData: cityWeatherDataFromAxio,
         error: false
       })
-
+      this.handleGetWeather();
     } catch (error) {
       console.log(error.messgae)
     }
