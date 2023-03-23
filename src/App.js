@@ -3,6 +3,7 @@ import React from 'react';
 import axios from 'axios'
 import CityExplorerForm from './CityExplorerForm.js'
 import WeatherData from './weather.js';
+import MovieData from './Movies.js';
 
 
 
@@ -13,57 +14,89 @@ class App extends React.Component {
       city: '',
       cityData: {},
       errorMessage: '',
-      cityWeatherData: {},
-      city_name: ''
+      cityWeatherData: [],
+      cityMovieData: [],
     }
   }
 
 
 
 
-handleGetWeather = async() => {
-
-  try {
-
-    //TODO: use axiopus to get the dat from locationIQ - using city in state 
-    let url = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.city}&format=json`
-
-    let cityDataFromAxio = await axios.get(url);
-
-    console.log(cityDataFromAxio.data[0]);
-    //TODO: set state with the data that comes back from axios 
-    this.setState({
-      cityData: cityDataFromAxio.data[0],
-      error: false
-    })
-  } catch (error) {
-    console.log(error.message)
-    this.setState({
-      errorMessage: false,
-
-    })
-  }
-  
-
-}
-
-  handleSubmit = async (e) => {
+  getCityData = async (e) => {
     e.preventDefault();
+    try {
+      //TODO: use axiopus to get the dat from locationIQ - using city in state 
+      let url = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.city}&format=json`
+      let cityDataFromAxio = await axios.get(url);
+      let lat = cityDataFromAxio.data[0].lat
+      let lon = cityDataFromAxio.data[0].lon
+
+      //TODO: set state with the data that comes back from axios 
+      this.setState({
+        cityData: cityDataFromAxio.data[0],
+        errorMessage: false
+      })
+
+      this.handleGetWeather(lat, lon);
+    } catch (error) {
+      this.setState({
+        errorMessage: false,
+      })
+    }
+  }
+
+  getMovieData = async () => { 
+    console.log('inside getMovies')
+    try {
+      let movieUrl = (`${process.env.REACT_APP_SERVER}/movie?query=${this.state.city}`)
+      let movieDataFromAxio = await axios.get(movieUrl)
+      console.log(movieDataFromAxio);
+      let movieArr = movieDataFromAxio.results.map((movies, key) => {
+        console.log(movieArr);
+        return movies
+
+      })
+      this.setState({
+        cityMovieData: movieArr
+      })
+    } catch (error) {
+      this.setState({
+        errorMessage: false,
+      })
+    }
+  }
+
+
+
+
+
+  handleGetWeather = async (lat, lon) => {
+
 
     // //TODO: USE AXIOS TO HIT THE API(BACKEND)
     // //TODO: SET THAT INFO TO STATE 
     try {
-      let url = `${process.env.REACT_APP_SERVER}/weather?city_name=${this.state.city_name}`
+      let Weatherurl = `${process.env.REACT_APP_SERVER}/weather?searchQuery=${this.state.city}&lat=${lat}&lon=${lon}`;
 
-      let cityWeatherDataFromAxio = await axios.get(url)
+      let cityWeatherDataFromAxio = await axios.get(Weatherurl)
 
+      let weatherArr = cityWeatherDataFromAxio.data.map((forecast, key) => {
+        return forecast
+
+      })
+
+      this.getMovieData();
       this.setState({
-        cityWeatherData: cityWeatherDataFromAxio,
+        cityWeatherData: weatherArr,
         error: false
       })
-      this.handleGetWeather();
+
+
+
     } catch (error) {
-      console.log(error.messgae)
+      this.setState({
+        errorMessage: false,
+      })
     }
   }
 
@@ -75,32 +108,13 @@ handleGetWeather = async() => {
 
   // ** async/await - handle our async code 
   // ** try/catch - handle our errors - TRY ressolves our successful promises & CATCH rejected promise 
-  getCityData = async (event) => {
-    event.preventDefault()
 
-    
-
-
-
-
-
-
-    //   //TODO: use axiopus to get the dat from locationIQ - using city in state 
-    //   let url = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.city}&format=json`
-
-    //   let cityDataFromAxio = await axios.get(url);
-
-    //   console.log(cityDataFromAxio.data[0]);
-    //   //TODO: set state with the data that comes back from axios 
-    //   this.setState({
-    //     cityData: cityDataFromAxio.data[0]
-
-  }
 
 
 
   render() {
-    console.log(this.state)
+
+
     return (
       <section>
         <CityExplorerForm
@@ -109,10 +123,10 @@ handleGetWeather = async() => {
           getCityData={this.getCityData}
           handleCityInput={this.handleCityInput}
         />
-        {this.state.cityData.display_name &&
+        {this.state.city.display_name &&
           <div id='idText'>
             <p>
-              {this.state.cityData.display_name}
+              {this.state.city.display_name}
             </p>
           </div>
         }
@@ -120,19 +134,21 @@ handleGetWeather = async() => {
           ? <p>{this.state.errorMessage}</p>
           : Object.keys(this.state.cityData).length > 0 &&
           <div id='dataContainer'> <img src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${this.state.cityData.lat},${this.state.cityData.lon}&zoom=13`} alt='map of current city'></img>
-            <div id='textContainer'> <div id='lat'>
-              <p>Latitude:{this.state.cityData.lat}</p>
-            </div>
+            <section id='textContainer'>
               <div>
-                <p id='lon'>Longitutde:{this.state.cityData.lon}</p>
+                <p>Latitude:{this.state.cityData.lat}</p>
               </div>
-            </div>
+              <div>
+                <p>Longitutde:{this.state.cityData.lon}</p>
+              </div>
+            </section>
           </div>
         }
+        <MovieData
+          cityMovieData={this.state.cityMovieData}
+        />
         <WeatherData
-        cityWeatherData={this.state.cityWeatherData}
-        city_name={this.state.city_name}
-        getCityData={this.getCityData}
+          cityWeatherData={this.state.cityWeatherData}
         />
       </section>
     )
