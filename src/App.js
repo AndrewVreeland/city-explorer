@@ -48,16 +48,12 @@ class App extends React.Component {
   getMovieData = async () => { 
     console.log('inside getMovies')
     try {
-      let movieUrl = (`${process.env.REACT_APP_SERVER}/movie?query=${this.state.city}`)
-      let movieDataFromAxio = await axios.get(movieUrl)
-      console.log(movieDataFromAxio);
-      let movieArr = movieDataFromAxio.results.map((movies, key) => {
-        console.log(movieArr);
-        return movies
+      let movieUrl = `${process.env.REACT_APP_SERVER}/movie?searchQuery=${this.state.city}`
+      let movieDataFromAxios = await axios.get(movieUrl)
+      console.log(movieDataFromAxios.data);
 
-      })
       this.setState({
-        cityMovieData: movieArr
+        cityMovieData: movieDataFromAxios.data
       })
     } catch (error) {
       this.setState({
