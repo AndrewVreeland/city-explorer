@@ -7,6 +7,7 @@ import MovieData from './Movies.js';
 
 
 
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -14,6 +15,7 @@ class App extends React.Component {
       city: '',
       cityData: {},
       errorMessage: '',
+      error: false,
       cityWeatherData: [],
       cityMovieData: [],
     }
@@ -34,13 +36,15 @@ class App extends React.Component {
       //TODO: set state with the data that comes back from axios 
       this.setState({
         cityData: cityDataFromAxio.data[0],
-        errorMessage: false
+        error: false
       })
 
       this.handleGetWeather(lat, lon);
     } catch (error) {
+      console.log('getCities' + error.message);
       this.setState({
-        errorMessage: false,
+        error: true,
+        errorMessage: error.message
       })
     }
   }
@@ -53,11 +57,13 @@ class App extends React.Component {
       console.log(movieDataFromAxios.data);
 
       this.setState({
+        error: false,
         cityMovieData: movieDataFromAxios.data
       })
     } catch (error) {
       this.setState({
-        errorMessage: false,
+        error: true,
+        errorMessage: error.message
       })
     }
   }
@@ -91,14 +97,15 @@ class App extends React.Component {
 
     } catch (error) {
       this.setState({
-        errorMessage: false,
+        error: true,
+        errorMessage: error.message
       })
     }
   }
 
   handleCityInput = (event) => {
     this.setState({
-      city: event.target.value
+      city: event.target.value,
     })
   }
 
