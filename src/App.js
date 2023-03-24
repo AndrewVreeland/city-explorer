@@ -27,6 +27,7 @@ class App extends React.Component {
   getCityData = async (e) => {
     e.preventDefault();
     try {
+
       //TODO: use axiopus to get the dat from locationIQ - using city in state 
       let url = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&q=${this.state.city}&format=json`
       let cityDataFromAxio = await axios.get(url);
@@ -81,15 +82,15 @@ class App extends React.Component {
       let Weatherurl = `${process.env.REACT_APP_SERVER}/weather?searchQuery=${this.state.city}&lat=${lat}&lon=${lon}`;
 
       let cityWeatherDataFromAxio = await axios.get(Weatherurl)
+      console.log(cityWeatherDataFromAxio)
+      // let weatherArr = cityWeatherDataFromAxio.data.map((forecast, key) => {
+      //   return forecast
 
-      let weatherArr = cityWeatherDataFromAxio.data.map((forecast, key) => {
-        return forecast
-
-      })
+      // })
 
       this.getMovieData();
       this.setState({
-        cityWeatherData: weatherArr,
+        cityWeatherData: cityWeatherDataFromAxio.data,
         error: false
       })
 
