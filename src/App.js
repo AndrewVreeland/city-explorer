@@ -45,7 +45,7 @@ class App extends React.Component {
     }
   }
 
-  getMovieData = async () => { 
+  getMovieData = async () => {
     console.log('inside getMovies')
     try {
       let movieUrl = `${process.env.REACT_APP_SERVER}/movie?searchQuery=${this.state.city}`
@@ -119,17 +119,15 @@ class App extends React.Component {
           getCityData={this.getCityData}
           handleCityInput={this.handleCityInput}
         />
-        {this.state.city.display_name &&
-          <div id='idText'>
-            <p>
-              {this.state.city.display_name}
-            </p>
-          </div>
-        }
+        
+        
         {this.state.error
           ? <p>{this.state.errorMessage}</p>
           : Object.keys(this.state.cityData).length > 0 &&
-          <div id='dataContainer'> <img src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${this.state.cityData.lat},${this.state.cityData.lon}&zoom=13`} alt='map of current city'></img>
+          <div id='dataContainer'>
+            <h1>
+              {`Map of ${this.state.city}`}
+            </h1>
             <section id='textContainer'>
               <div>
                 <p>Latitude:{this.state.cityData.lat}</p>
@@ -138,14 +136,18 @@ class App extends React.Component {
                 <p>Longitutde:{this.state.cityData.lon}</p>
               </div>
             </section>
+            <img src={`https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_LOCATIONIQ_API_KEY}&center=${this.state.cityData.lat},${this.state.cityData.lon}&zoom=13`} alt='map of current city'></img>
+              <h1>
+            <WeatherData
+            cityWeatherData={this.state.cityWeatherData}
+          />
+              {`Top Movies of ${this.state.city}`}
+            </h1>
           </div>
         }
         <MovieData
           cityMovieData={this.state.cityMovieData}
-        />
-        <WeatherData
-          cityWeatherData={this.state.cityWeatherData}
-        />
+          />
       </section>
     )
   }

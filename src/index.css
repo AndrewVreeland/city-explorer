@@ -51,3 +51,12 @@ img{
 #cityExplorerButton{
   margin-left: 10px;
 }
+#acc{
+  display:grid;
+  
+  justify-content: space-around;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+#idText{color: white;}
+
